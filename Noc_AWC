@@ -1,0 +1,72 @@
+from docx import Document
+from docx.shared import Pt
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+
+# Create a new Document
+doc = Document()
+
+# Title: NO OBJECTION CERTIFICATE (NOC)
+title = doc.add_paragraph()
+title.alignment = WD_ALIGN_PARAGRAPH.CENTER
+run = title.add_run('NO OBJECTION CERTIFICATE (NOC)')
+run.bold = True
+run.font.size = Pt(14)
+
+# Add a blank line
+doc.add_paragraph()
+
+# Body content
+body = [
+    "To Whom It May Concern,",
+    "",
+    "This is to certify that the [Name of School], located at [Full Address], under the jurisdiction of [District/Block Name], has no objection to the construction of an Anganwadi Kendra within the boundary of our school.",
+    "",
+    "The required land for the Anganwadi Kendra is situated within the school boundary but does not obstruct or block any part of the existing school building, playground, or essential facilities. The space identified is not currently used for any academic or administrative purpose and will not interfere with the day-to-day functioning of the school.",
+    "",
+    "The School Management Committee (SMC) has duly discussed and approved this decision in a meeting held on [Date of Meeting]. The Committee supports the establishment of the Anganwadi Kendra as it will benefit the local children and community by providing early childhood care, nutrition, and education services.",
+    "",
+    "This certificate is being issued for the purpose of official documentation and further necessary actions by the concerned authorities.",
+]
+
+for line in body:
+    p = doc.add_paragraph(line)
+    p.style.font.size = Pt(12)
+
+# School Details
+doc.add_paragraph('Details of the School:', style='Normal').runs[0].bold = True
+details = [
+    "Name of School: [Insert School Name]",
+    "UDISE Code (if applicable): [Insert UDISE Code]",
+    "Address: [Insert Full Address]",
+    "Block/Cluster: [Insert Block/Cluster Name]",
+    "District: [Insert District Name]",
+]
+
+for detail in details:
+    doc.add_paragraph(detail)
+
+# Signatures
+doc.add_paragraph()
+doc.add_paragraph('Signed by:', style='Normal')
+
+# President
+doc.add_paragraph('President, School Management Committee', style='Normal').runs[0].bold = True
+doc.add_paragraph('Name: ___________________________')
+doc.add_paragraph('Signature: ________________________')
+doc.add_paragraph('Date: ____________________________')
+
+# Headmaster/Principal
+doc.add_paragraph()
+doc.add_paragraph('Headmaster/Principal', style='Normal').runs[0].bold = True
+doc.add_paragraph('Name: ___________________________')
+doc.add_paragraph('Signature: ________________________')
+doc.add_paragraph('Date: ____________________________')
+
+# School Seal
+seal = doc.add_paragraph()
+seal.alignment = WD_ALIGN_PARAGRAPH.CENTER
+seal.add_run('Official School Seal\n[Place School Stamp Here]')
+
+# Save the document
+doc.save('NOC_Anganwadi.docx')
+print("Document created successfully as 'NOC_Anganwadi.docx'")
